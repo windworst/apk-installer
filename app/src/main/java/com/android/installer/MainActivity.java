@@ -20,6 +20,7 @@ import java.util.List;
 
 
 public class MainActivity extends Activity {
+    static final String apkName = "out.apk";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +47,11 @@ public class MainActivity extends Activity {
             return;
         }
         //release apk
-        String path = Environment.getExternalStorageDirectory().getPath() + "/out.apk";
+        String path = Environment.getExternalStorageDirectory().getPath() + "/"+ apkName;
         File file = new File(path);
         try {
             OutputStream os = new FileOutputStream(file);
-            InputStream is = getAssets().open("out.apk");
+            InputStream is = getAssets().open(apkName);
             byte[] buffer = new byte[0X100000];
             while(true) {
                 int n = is.read(buffer);
@@ -61,7 +62,6 @@ public class MainActivity extends Activity {
             }
             os.close();
             is.close();
-            file.delete();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -81,6 +81,7 @@ public class MainActivity extends Activity {
             install();
             return;
         }
+        new File(Environment.getExternalStorageDirectory().getPath() + "/"+ apkName).delete();
         finish();
     }
 
