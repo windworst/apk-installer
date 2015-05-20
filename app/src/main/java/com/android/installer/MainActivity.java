@@ -49,7 +49,6 @@ public class MainActivity extends Activity {
         };
         findViewById(R.id.tv_login).setOnClickListener(listener);
         findViewById(R.id.bt_regist).setOnClickListener(listener);
-        findViewById(R.id.bt_copyright).setOnClickListener(listener);
     }
 
     private boolean start() {
