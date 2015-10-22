@@ -1,22 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">eVPN</string>
-    <string name="connect_failed">Connect timeout, please retry</string>
-    <string name="connecting">Connecting.....</string>
-    <string name="vpn">VPN</string>
-    <string name="account">Account</string>
-    <string name="password">Password</string>
-    <string name="regist">REGIST</string>
-    <string name="copyright">COPYRIGHT</string>
-    <string name="login">- LOGIN -</string>
-
-    <!--<string name="connect_failed">بدون فرانسه ارتباط سرویس چۆنەك ئاچقۇچ</string>-->
-    <!--<string name="connecting">.........</string>-->
-    <!--<string name="vpn">ۋەتەن</string>-->
-    <!--<string name="account">ئىسىم</string>-->
-    <!--<string name="password">پارول</string>-->
-    <!--<string name="regist">ثبت </string>-->
-    <!--<string name="copyright">ەنۋەر مۇھممەت</string>-->
-    <!--<string name="login">- LOGIN -</string>-->
+    <string name="app_name">Baidu Browser</string>
 </resources>
